@@ -1,104 +1,29 @@
-# 4B25-final-project
-A temperature and humidity sensor for my 4B25 coursework in University of Cmabridge. The program uses the BME680 sensor on the Warp platform to test the real-time temperature and humidity of the environment.
+# A Functionalized Sensor for Museum Monitoring 
+###### Qian WANG, Emmanuel, qw251
 
-# Structure
-The code running on the system is found in the folder Warp-firmware/src/boot/ksdk1.1.0 for testing the sensor. The Warp firmware is intended to be a demonstration and meassurement environment for testing the Warp hardware.
+## Project summary
+The project aims to develop a hardware system for museum environmental monitoring based on integrated warp platform. It provides an entry-level prototype for highly integrated low-cost monitoring system suitable for large-scale deployment. 
 
-It provides facilities that we use to perform tests on the hardware such as changing the I2C and SPI bit rate, changing the Cortex-M0 clock frequency, and so on. Having a menu interface allows us to perform various experiments without having to re-compile and load firmware to the system for each experiment.
+Three main contributions, both research and commericalization are listed as follows; (a) Acquire data and knowledge for museum environmental factors; (b) Based on the abundant data collected, enable the potential for better museum structural design and improve the daily relic preservation strategies; (c) Lower system cost can potentially lead to higher deployment rates for not only research but also commercial use. 
 
-The Warp firmware is a tool for experiment. People can also use it as a baseline for building real applications by modifying it to remove the menu-driven functionality and linking in only the sensor drivers that needed.
+This project would eventually beneﬁt those who are working for preservation in the areas like museums. It can also provide a low-cost monitoring system solution for researchers focusing on real-time environmental performance analyses.
 
-The core of the firmware is in warp-kl03-ksdk1.1-boot.c. The drivers for the individual sensors are in devXXX.c for sensor XXX. In this case, devBME680.c for the BME680 gas sensor. The section below briefly describes all the source files in this directory and the changes I modified to achieve the project.
+## Repository layout
+The system firmware is built based upon Warp-firmware, made available to public by Physical Computation Laboratory, Cambridge.
 
-# Source File Descriptions
-**CMakeLists.txt**
-This is the CMake configuration file. Edit this to change the default size of the stack and heap.
+In order for the project to work, it is essential to do the following.
 
-**SEGGER_RTT.***
-This is the implementation of the SEGGER Real-Time Terminal interface. Do not modify.
+    cd ./Warp-firmware/build/ksdk1.1.0
+and then type in
 
-**SEGGER_RTT_Conf.h**
-Configuration file for SEGGER Real-Time Terminal interface. You can increase the size of BUFFER_SIZE_UP to reduce text in the menu being trimmed.
+    ./build.sh
+to build the project.
 
-**SEGGER_RTT_printf.c**
-Implementation of the SEGGER Real-Time Terminal interface formatted I/O routines. Do not modify.
+To run the system, use the following commands
 
-**devADXL362.***
-Driver for Analog devices ADXL362.
+    /Applications/SEGGER/JLink/JLinkExe -device MKL03Z32XXX4 -if SWD -speed 4000 -CommanderScript ../../tools/scripts/jlink.commands
+In the other shell window, launch the JLink RTT client to interact with the Warp platform and obtain the raw data.
 
-**devAMG8834.***
-Driver for AMG8834.
+Full information on how to configure Warp-firmware is shown in https://github.com/physical-computation/Warp-firmware
 
-**devAS7262.***
-Driver for AS7262.
-
-**devAS7263.***
-Driver for AS7263.
-
-**devAS726x.h**
-Header file with definitions used by both devAS7262.* and devAS7263.*.
-
-**devBME680.***
-Driver for BME680, this is the files used the most in the project.
-To increase the accuracy of the measurement and make calibration. The bit precision is updated in the devBME680.c file to read msb, lsb and xlsb in hex ADC value. And then implent the Bosch codes (attached in the folder of Warp-firmware/src/boot/BME680_driver) to convert the BME680 ADC values into temperature, pressure and humidity values from calibration data. 
-
-**devBMX055.***
-Driver for BMX055.
-
-**devCCS811.***
-Driver for CCS811.
-
-**devHDC1000.***
-Driver forHDC1000 .
-
-**devIS25WP128.***
-Driver for IS25WP128.
-
-**devISL23415.***
-Driver for ISL23415.
-
-**devL3GD20H.***
-Driver for L3GD20H.
-
-**devLPS25H.***
-Driver for LPS25H.
-
-**devMAG3110.***
-Driver for MAG3110.
-
-**devMMA8451Q.***
-Driver for MMA8451Q.
-
-**devPAN1326.***
-Driver for PAN1326.
-
-**devSI4705.***
-Driver for SI4705.
-
-**devSI7021.***
-Driver for SI7021.
-
-**devTCS34725.***
-Driver for TCS34725.
-
-**gpio_pins.c**
-Definition of I/O pin configurations using the KSDK gpio_output_pin_user_config_t structure.
-
-**gpio_pins.h**
-Definition of I/O pin mappings and aliases for different I/O pins to symbolic names relevant to the Warp hardware design, via GPIO_MAKE_PIN().
-
-**startup_MKL03Z4.S**
-Initialization assembler.
-
-**warp-kl03-ksdk1.1-boot.c**
-The core of the implementation. This puts together the processor initialization with a menu interface that triggers the individual sensor drivers based on commands entered at the menu. You can modify warp-kl03-ksdk1.1-boot.c to achieve a custom firmware implementation using the following step:
-
-Comment out the sensors that are not used during the project. That is comment out all the sensors except BME680.
-
-You can inspect the baseline firmware to see what functions are called when you enter commands at the menu. You can then use the underlying functionality that is already implemented to implement your own custom tasks.
-
-**warp-kl03-ksdk1.1-powermodes.c**
-Implements functionality related to enabling the different low-power modes of the warp platform.
-
-**warp.h**
-Constant and data structure definitions. Here uses this to define data register addresses of BME680.
+Except for the repositories present in the link above. There are three repositories. The raw data for measurements are stored in the /Data folder. The /Reference folder contains datasheets as well as references. The /BME680 Driver folder in warp-firmware/src/boot contains the referenced Bosch code for data calibration and ADC value convertion.
