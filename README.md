@@ -26,4 +26,4 @@ In the other shell window, launch the JLink RTT client to interact with the Warp
 
 Full information on how to configure Warp-firmware is shown in https://github.com/physical-computation/Warp-firmware
 
-Except for the repositories present in the link above. There are three repositories. The raw data for measurements are stored in the /Data folder. The /Reference folder contains datasheets as well as references. The /BME680 Driver folder in warp-firmware/src/boot contains the referenced Bosch code for data calibration and ADC value convertion.
+Except for the repositories present in the link above. There are four adding repositories. The raw data for measurements are stored in the /Data folder. The /Reference folder contains datasheets as well as references. The /Implementation folder contains software implementation with a README.md clear documentation for the software and the referenced Bosch cold for data calibration and ADC convertion. The /BME680 Driver folder in warp-firmware/src/boot also contains the referenced Bosch code for data calibration and ADC value convertion.
