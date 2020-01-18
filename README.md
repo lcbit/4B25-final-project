@@ -40,7 +40,7 @@ Header file with definitions used by both devAS7262.* and devAS7263.*.
 
 **devBME680.***
 Driver for BME680, this is the files used the most in the project.
-To increase the accuracy of the measurement and make calibration. The bit precision is updated in the devBME680.c file to read msb, lsb and xlsb in hex ADC value. And then implent the Bosch codes (attached in the folder of Warp-firmware/src/boot) to convert the BME680 ADC values into temperature, pressure and humidity values from calibration data. 
+To increase the accuracy of the measurement and make calibration. The bit precision is updated in the devBME680.c file to read msb, lsb and xlsb in hex ADC value. And then implent the Bosch codes (attached in the folder of Warp-firmware/src/boot/BME680_driver) to convert the BME680 ADC values into temperature, pressure and humidity values from calibration data. 
 
 **devBMX055.***
 Driver for BMX055.
